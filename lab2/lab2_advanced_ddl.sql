@@ -194,3 +194,56 @@ ALTER DATABASE university_test IS_TEMPLATE false;
 DROP DATABASE IF EXISTS university_test;
 DROP DATABASE IF EXISTS university_distributed;
 CREATE DATABASE university_backup WITH TEMPLATE university_main;
+
+
+-- additional tasks
+-- A
+CREATE DATABASE elearning_platform;
+CREATE TABLESPACE video_storage LOCATION '/data/videos';
+
+
+-- B
+CREATE TABLE online_videos(
+    video_id SERIAL,
+    course_id INT,
+    video_title VARCHAR(100),
+    video_description TEXT,
+    video_duration TIME WITHOUT TIME ZONE,
+    file_size  BIGINT,
+    upload_date DATE,
+    is_public BOOLEAN,
+    view_count INT
+);
+CREATE TABLE student_progress(
+    progress_id SERIAL,
+    student_id INT,
+    video_id INT,
+    watch_percentage DECIMAL(10, 1),
+    last_watched TIMESTAMP WITH TIME ZONE,
+    completed BOOLEAN,
+    notes TEXT,
+    bookmark_time TIME WITHOUT TIME ZONE
+);
+
+
+
+-- C
+ALTER TABLE courses
+    ADD COLUMN is_online_available BOOLEAN DEFAULT false,
+    ADD COLUMN platform_url VARCHAR(200),
+    ALTER COLUMN description SET DEFAULT 'No description available';
+ALTER TABLE students
+    ADD COLUMN preffered_language CHAR(5),
+    ADD COLUMN last_login TIMESTAMP WITHOUT TIME ZONE;
+
+-- D
+CREATE TABLE quiz_attempts(
+    id SERIAL PRIMARY KEY,
+    student_id INT,
+    Quiz_name VARCHAR(80),
+    start_time TIMESTAMP WITHOUT TIME ZONE,
+    duration INTERVAL,
+    score DECIMAL(10, 2),
+    passed BOOLEAN,
+    attempt_number SMALLINT
+);
