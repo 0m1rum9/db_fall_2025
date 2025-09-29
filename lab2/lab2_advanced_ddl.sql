@@ -20,11 +20,11 @@ CREATE DATABASE university_distributed
 
 
 
-CREATE TABLE students(
-     student_id SERIAL PRIMARY KEY,
-     first_name VARCHAR(50),
-     last_name VARCHAR(50),
-     email VARCHAR(100),
+	CREATE TABLE students(
+	     student_id SERIAL PRIMARY KEY,
+	     first_name VARCHAR(50),
+	     last_name VARCHAR(50),
+	     email VARCHAR(100),
      phone CHAR(15),
      date_of_birth date,
      enrollment_data date,
@@ -186,7 +186,7 @@ CREATE TABLE semester_calendar(
      end_date DATE,
      registration_deadline TIMESTAMP WITH TIME ZONE,
      is_current BOOLEAN
- );
+);
 
 
 
