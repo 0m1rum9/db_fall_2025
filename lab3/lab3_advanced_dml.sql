@@ -135,3 +135,37 @@ DELETE FROM employees WHERE status = 'Inactive';
 UPDATE projects
  SET end_date = end_date + INTERVAL '30 days' FROM departments
  WHERE projects.budget > 50000 AND (SELECT COUNT(*) FROM employees WHERE departments.dept_name = employees.department) > 3;
+
+-- Additional tasks
+-- Part A 
+INSERT INTO products(product_name, category, price, stock_quantity, supplier_id)
+VALUES('Wireless Mouse', 'Electronics', 25.99, 50, 3);
+INSERT INTO suppliers(supplier_name, contact_email, active_status)  
+  VALUES('Tech Supplies Co', 'tech@supplies.com', true), ('Office Direct', 'info@officedirect.com', true);
+INSERT INTO products(product_name, category, price, stock_quantity, supplier_id)
+ VALUES('USB CABLE', 'Accessories', 15.5 * 1.2, 100, 2);
+
+
+-- Part B
+UPDATE products
+  SET price = price*1.15 WHERE category = 'Electronics';
+ UPDATE products
+  SET category = CASE 
+                  WHEN stock_quantity > 100 THEN 'Overstock'
+                  WHEN stock_quantity between 20 and 100 THEN 'Regular'
+                  ELSE 'Low stock'
+                  end;
+ UPDATE products
+  SET price = price * 1.15, stock_quantity = stock_quantity + 20 WHERE price < 10;
+
+
+-- Part C 
+ DELETE FROM products WHERE stock_quantity = 0 AND price > 50;
+ DELETE FROM suppliers 
+  WHERE supplier_id NOT IN (SELECT DISTINCT supplier_id FROM products WHERE products.supplier_id IS NOT NULL);
+
+ -- Part D 
+ INSERT INTO products(product_name, stock_quantity, supplier_id)
+  VALUES('Mystery Item', 10, 1);
+ UPDATE products
+   SET price = 99.99 WHERE category IS NULL RETURNING product_id, product_name;
