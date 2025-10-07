@@ -99,3 +99,26 @@ SELECT COUNT(employee_id) AS total_number_of_employees, department, AVG(salary) 
 
 
 
+-- add
+SELECT SUBSTR(title, 0, 21), UPPER(author), REPLACE(publisher, ' ', '_') FROM books;
+ALTER TABLE books
+ ADD COLUMN price_range VARCHAR(200);
+UPDATE books
+ SET price_range = CASE 
+  WHEN price > 50 THEN 'Premium' 
+  WHEN price BETWEEN 20 AND 50 THEN 'Standard' 
+  ELSE 'Budget'  
+END;
+SELECT customer_name, COALESCE(email, 'contact@bookstore.com') FROM customers;                
+
+SELECT * FROM books WHERE publication_year BETWEEN '2015-01-01' AND '2023-01-02' AND stock_quantity < 10;
+SELECT * FROM customers WHERE customer_name LIKE '%son' OR customer_name LIKE '%sen';
+SELECT * FROM orders WHERE discount_percent IS NOT NULL AND quantity > 5;
+SELECT * FROM books WHERE category IN('Fiction', 'Mystery', 'Thriller');
+
+
+SELECT price * stock_quantity FROM books;
+SELECT AVG(price) FROM books GROUP BY category;
+SELECT COUNT(*) FROM customers JOIN orders ON customers.customer_id = orders.customer_id GROUP BY orders.customer_id;
+
+ 
